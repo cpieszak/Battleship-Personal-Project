@@ -1,0 +1,82 @@
+# Connor Pieszak
+# 4/3/24
+
+import math
+import random
+
+def randomShip():
+    part1 = random.randint(0,5)
+    part2 = random.randint(0,5)
+    spot = "(" + str(part1) + ", " + str(part2) + ")"
+    return spot
+
+# Filling a list of random points on the map for the ships to be in
+ship1 = randomShip()
+ship2 = randomShip()
+ship3 = randomShip()
+ships = [ship1, ship2, ship3]
+print(ships)
+
+# Function that checks the user's guess and then produces whether it is correct or not
+def hit_check(attempts):
+    ammo = 10
+    tries = 0
+    score = 0
+    length = len(ships)
+    while(tries < attempts and ammo > 0 and length > 0):
+        guess = input("Please enter where you think the ship is in the format (x, y): ")
+        if(ships[0] == guess or ships[1] == guess or ships[2] == guess):
+            print()
+            print("Hit! Great Job!")
+            print("-------------------------------------------------------------------")
+            print()
+            tries = tries + 1
+            score = score + 1
+            length = length - 1
+        else:
+            randship = ships[random.randint(0,len(ships) - 1)]
+            xvalue = randship[1]
+            print("Incorrect!")
+            print()
+            print("Hint: the x-value of one of the ships is",xvalue)
+            print("-------------------------------------------------------------------")
+            print()
+            tries = tries + 1
+    else:  
+        if(score == 3):
+            print("Congrats! You win the game!")
+        elif(tries >= attempts or ammo == 0):
+            print("Stop! You used all of your attempts or are out of ammo!")
+            print("The locations were " + ships[0] + ", " + ships[1] + ", and " + ships[2] + ".")
+
+
+
+print("Welcome to battleship!")
+print()
+print("There are three ships hidden around the map.")
+print()
+print("-------------------")
+print("| [0][0][0][0][0] |")
+print("| [0][0][0][0][0] |")
+print("| [0][0][0][0][0] |")
+print("| [0][0][0][0][0] |")
+print("| [0][0][0][0][0] |")
+print("-------------------")
+print("\ .................\ ")
+print(" \ .................\ ")
+print("  \__________________\ ")
+print()
+print("Please indicate where you would like to shoot. For example, the top right box would be (1,5). ")
+print()
+print("Oh, and a heads up: you only have 10 ammo!")
+print()
+
+# Where the user says how many attempts they would like to give themself
+yeahOrNo = input("Would you like to play? (Y or N): ").upper()
+if(yeahOrNo == "Y"):
+    attempt = int(input("How many attempts would you like to try and win in (less than 10)? "))
+    play = hit_check(attempt)
+    
+    play
+else:
+    print("Goodbye!")
